@@ -4,14 +4,12 @@
 
 int main()
 {
-	std::unique_ptr<GameManager> GM = std::make_unique<GameManager>();
-
-	GM->BeginGame();
+	GameManager::GetInstace().BeginGame();
 
 	//TODO need to change this pooling for a delegate or something for the moment this should do it 
-	while (GM->GetIsGameRunning())
+	while (GameManager::GetInstace().GetIsGameRunning())
 	{
-		GM->GameTick();
+		GameManager::GetInstace().GameTick();
 	}
 
 	return 0;
