@@ -1,6 +1,6 @@
 #pragma once
 
-enum class
+enum class Archetype
 {
 	Warrior,
 	Mage,
