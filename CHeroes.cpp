@@ -1,31 +1,19 @@
 //CHeroes Main File
 #include <iostream>
+#include "GameManager.h"
 
 int main()
 {
-	bool bIsRunning = true;
+	std::unique_ptr<GameManager> GM = std::make_unique<GameManager>();
 
-	std::cout << "====================================\n";
-	std::cout << "   CHEROES COMBAT SIMULATOR v1.0 \n";
-	std::cout << "====================================\n";
+	GM->BeginGame();
 
-	while (bIsRunning)
+	//TODO need to change this pooling for a delegate or something for the moment this should do it 
+	while (GM->GetIsGameRunning())
 	{
-		std::cout << "Input a number to end the game\n";
-		uint32_t TemporalChoise;
-
-		if ((std::cin >> TemporalChoise))
-		{
-			bIsRunning = false;
-		}
-		else
-		{
-			std::cout <<" Not a number Try again\n";
-			std::cin.clear();
-			std::cin.ignore(10000, '\n');
-		}
+		GM->GameTick();
 	}
-	std::cout << "Bye\n";
+
 	return 0;
 }
 

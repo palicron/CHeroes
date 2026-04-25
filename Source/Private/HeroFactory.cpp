@@ -1,0 +1,1 @@
+#include "HeroFactory.h"
