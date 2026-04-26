@@ -11,12 +11,14 @@ class HeroFactory
 {
 public:
 
-
-	static std::vector<std::unique_ptr<Hero>> CreateInitialRoster();
-
 	template <typename T, typename... TArgs>
 		requires std::derived_from<T, Hero>
 	static std::unique_ptr<T> CreateHero(TArgs&&... args);
+
+	std::unique_ptr<Hero> CreateHero(Archetype HeroArchetype);
+
+private:
+	static std::vector<std::unique_ptr<Hero>> CreateInitialRoster();
 };
 
 template <typename T, typename... TArgs>
