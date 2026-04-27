@@ -2,7 +2,7 @@
 #include "Types.h"
 #include <algorithm>
 
-void Hero::MeleeAttack(Hero& Target) const
+void Hero::MeleeAttack(Hero& Target)
 {
 	DamageInfo NewDamage;
 	//TODO NEED TO ADD A Grap Weapon

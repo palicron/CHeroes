@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 
+#include "Types.h"
+
 struct DamageInfo;
 
 class Hero
@@ -19,15 +21,58 @@ public:
 	Hero& operator=(const Hero& Other) = default;
 	Hero(Hero&& Other) noexcept = default;
 	Hero& operator=(Hero&& Other) noexcept = default;
-	~Hero() = default;
+	virtual ~Hero() = default;
 
-	virtual void MeleeAttack(Hero& Target) const;
+	virtual void MeleeAttack(Hero& Target);
 
 	virtual void UseAbility(const int32_t SlotIndex, Hero& Target);
 
 	virtual void TakeDamage(const DamageInfo& DamageInfo);
 
-private:
+	virtual Archetype GetHeroArchetype() const = 0;
+
+	int32_t GetHealth() const
+	{
+		return Health;
+	}
+
+	int32_t GetStrength() const
+	{
+		return Strength;
+	}
+
+	int32_t GetIntelligence() const
+	{
+		return Intelligence;
+	}
+
+	int32_t GetResource() const
+	{
+		return Resource;
+	}
+
+	int32_t GetArmor() const
+	{
+		return Armor;
+	}
+
+	int32_t GetMagicArmor() const
+	{
+		return MagicArmor;
+	}
+
+	int32_t GetAttackPwr() const
+	{
+		return AttackPwr;
+	}
+
+	int32_t GetMagicPwr() const
+	{
+		return MagicPwr;
+	}
+
+
+protected:
 
 	int32_t Health;
 

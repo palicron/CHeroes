@@ -129,16 +129,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Private\Barbarian.cpp" />
     <ClCompile Include="CHeroes.cpp" />
     <ClCompile Include="Source\Private\Hero.cpp" />
     <ClCompile Include="Source\Private\GameManager.cpp" />
     <ClCompile Include="Source\Private\HeroFactory.cpp" />
+    <ClCompile Include="Source\Private\MeleeHero.cpp" />
+    <ClCompile Include="Source\Private\Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Public\Barbarian.h" />
+    <ClInclude Include="Source\Public\MeleeHero.h" />
     <ClInclude Include="Source\Public\Hero.h" />
     <ClInclude Include="Source\Public\HeroFactory.h" />
     <ClInclude Include="Source\Public\GameManager.h" />
     <ClInclude Include="Source\Public\Types.h" />
+    <ClInclude Include="Source\Public\Warrior.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

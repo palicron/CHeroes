@@ -7,7 +7,7 @@ enum class Archetype
 {
 	Warrior,
 	Mage,
-	Ranger,
+	Barbarian,
 	Warlock
 };
 

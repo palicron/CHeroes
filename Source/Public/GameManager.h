@@ -1,4 +1,9 @@
 #pragma once
+#include <memory>
+#include <vector>
+
+#include "Hero.h"
+
 class GameManager
 {
 public:
@@ -19,11 +24,17 @@ public:
 	void GameTick();
 	void EndGame();
 
+	void DisplayHeroStats(const Hero& Inhero) const;
+
 	bool GetIsGameRunning() const { return bIsRunning; }
 
 private:
 
 	GameManager() = default;
 	bool bIsRunning = true;
+
+	std::unique_ptr<Hero> PlayerHero;
+
+	std::vector<std::unique_ptr<Hero>> HeroesRooster;
 };
 
