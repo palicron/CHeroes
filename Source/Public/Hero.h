@@ -8,12 +8,13 @@ struct DamageInfo;
 class Hero
 {
 public:
-	Hero() : Health(1), Strength(1), Intelligence(1), Resource(1), Armor(0), MagicArmor(0), AttackPwr(1), MagicPwr(1)
+	Hero() : Health(1), MaxHealth(1), Strength(1), Intelligence(1), Resource(1), MaxResource(1), Armor(0), MagicArmor(0),AttackPwr(1), MagicPwr(1)
 	{
 	}
 
 	Hero(int32_t InHealth, int32_t InStrength, int32_t InIntelligence, int32_t InResource, int32_t InArmor, int32_t InMagicArmor, int32_t InAttackPwr, int32_t InMagicPwr) :
-	Health(InHealth), Strength(InStrength), Intelligence(InIntelligence), Resource(InResource), Armor(InArmor), MagicArmor(InMagicArmor), AttackPwr(InAttackPwr), MagicPwr(InMagicPwr)
+	Health(InHealth), MaxHealth(InHealth), Strength(InStrength), Intelligence(InIntelligence), Resource(InResource), MaxResource(InResource), Armor(InArmor), MagicArmor(InMagicArmor),
+	AttackPwr(InAttackPwr), MagicPwr(InMagicPwr)
 	{
 	}
 	
@@ -37,6 +38,11 @@ public:
 	{
 		return Health;
 	}
+	
+	int32_t GetMaxHealth() const
+	{
+		return MaxHealth;
+	}
 
 	int32_t GetStrength() const
 	{
@@ -47,11 +53,17 @@ public:
 	{
 		return Intelligence;
 	}
-
+	
 	int32_t GetResource() const
 	{
 		return Resource;
 	}
+	
+	int32_t GetMaxResource() const
+	{
+		return MaxResource;
+	}
+
 
 	int32_t GetArmor() const
 	{
@@ -78,12 +90,16 @@ protected:
 
 	int32_t Health;
 
+	int32_t MaxHealth;
+	
 	int32_t Strength;
 
 	int32_t Intelligence;
 
 	int32_t Resource;
 
+	int32_t MaxResource;
+	
 	int32_t Armor;
 
 	int32_t MagicArmor;

@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "Hero.h"
@@ -23,18 +24,24 @@ public:
 	void BeginGame();
 	void GameTick();
 	void EndGame();
-
-	void DisplayHeroStats(const Hero& Inhero) const;
-
+	
 	bool GetIsGameRunning() const { return bIsRunning; }
 
 private:
 
+	int32_t OpponentIndex = 0;
 	GameManager() = default;
 	bool bIsRunning = true;
 
 	std::unique_ptr<Hero> PlayerHero;
-
+	std::unique_ptr<Hero> OpponentHero;
+	
 	std::vector<std::unique_ptr<Hero>> HeroesRooster;
+	
+	void DisplayHeroStats(const Hero& Inhero) const;
+	void PrintHeroBox(const Hero& Inhero);
+	void SelectOpponent();
+	
+	std::string GenerateProgressBar(int value, int max, char symbol);
 };
 

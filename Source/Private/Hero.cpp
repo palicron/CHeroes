@@ -5,6 +5,8 @@
 Hero::Hero(const AttributeSet& Set)
 {
 	Health = Set.Health;
+	MaxHealth = Set.Health;
+	MaxResource = Set.Resource;
 	Strength = Set.Str;
 	Intelligence = Set.Int;
 	Resource = Set.Resource;
