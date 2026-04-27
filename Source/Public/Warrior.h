@@ -7,6 +7,8 @@ class Warrior : public MeleeHero
 {
 public:
 
+	Warrior(const AttributeSet& Set) : MeleeHero(Set){}
+	
 	virtual void MeleeAttack(Hero& Target) override;
 
 	virtual Archetype GetHeroArchetype() const override
@@ -16,6 +18,6 @@ public:
 
 private:
 
-	Archetype CurrentType = Archetype::Warrior;
+	Archetype CurrentType = Archetype::Archetype_Warrior;
 };
 

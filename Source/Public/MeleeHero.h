@@ -8,10 +8,7 @@ public:
 
 	MeleeHero(int32_t InHealth, int32_t InStrength, int32_t InIntelligence, int32_t InResource, int32_t InArmor, int32_t InMagicArmor, int32_t InAttackPwr, int32_t InMagicPwr) :
 		Hero(InHealth, InStrength, InIntelligence, InResource, InArmor, InMagicArmor, InAttackPwr, InMagicPwr){}
-
-	virtual Archetype GetHeroArchetype() const override
-	{
-		return Archetype::Barbarian;
-	}
+	
+	MeleeHero(const AttributeSet& Set) : Hero(Set){}
 };
 

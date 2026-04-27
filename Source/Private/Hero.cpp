@@ -2,6 +2,18 @@
 #include "Types.h"
 #include <algorithm>
 
+Hero::Hero(const AttributeSet& Set)
+{
+	Health = Set.Health;
+	Strength = Set.Str;
+	Intelligence = Set.Int;
+	Resource = Set.Resource;
+	Armor = Set.armor;
+	MagicArmor = Set.MgArmor;
+	AttackPwr = Set.AttackPower;
+	MagicPwr = Set.MagicPower;
+}
+
 void Hero::MeleeAttack(Hero& Target)
 {
 	DamageInfo NewDamage;

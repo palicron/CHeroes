@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <array>
 
 #include "Types.h"
 
@@ -16,22 +17,26 @@ public:
 
 	template <typename T, typename... TArgs>
 		requires std::derived_from<T, Hero>
-	static std::unique_ptr<T> CreateHeroTemplate(TArgs&&... args);
+	static std::unique_ptr<T> CreateHeroTemplate(const AttributeSet& Set);
 
 	static std::unique_ptr<Hero> CreateHero(Archetype HeroArchetype);
 
 	static int32_t GetRandomInt(const int32_t min, const int32_t max);
 
 	static std::string HeroClassToString(const Archetype Class);
+	
+	static AttributeSet GetRandomStats(Archetype HeroClass) ;
 
 private:
+	
+	static const std::array<HeroArchetypeData,Archetype::Archetype_Max> StatsDB;
 	
 };
 
 template <typename T, typename... TArgs>
 	requires std::derived_from<T, Hero>
-std::unique_ptr<T> HeroFactory::CreateHeroTemplate(TArgs&&... args)
+std::unique_ptr<T> HeroFactory::CreateHeroTemplate(const AttributeSet& Set)
 {
-	return std::make_unique<T>(std::forward<TArgs>(args)...);
+	return std::make_unique<T>(Set);
 }
 

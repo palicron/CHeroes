@@ -5,33 +5,29 @@
 #include "Hero.h"
 #include "Warrior.h"
 
+const std::array<HeroArchetypeData, Archetype::Archetype_Max> HeroFactory::StatsDB = {{
+	{ {80, 120}, {10, 15}, {2, 5}, {0, 100},{5, 7},{0, 1},{2, 5},{2, 5}}, // Warrior
+	{ {40, 100}, {5, 10}, {10, 20}, {100, 200},{2, 5},{2, 5},{2, 5},{2, 5}}, // Mage
+	{ {120, 200}, {12, 20}, {2, 4}, {0, 150},{0, 1},{0, 1},{2, 5},{2, 5}}, // Barbarian
+	{ {35, 120}, {3, 9}, {9, 18}, {100, 150},{2, 5},{2, 5},{2, 5},{2, 5}}, // Warlock
+	
+}};
 std::unique_ptr<Hero> HeroFactory::CreateHero(Archetype HeroArchetype)
 {
 	switch (HeroArchetype)
 	{
-	case Archetype::Warrior:
-
-		//TODO CHEKC THE ARGUMENT
-
-		/*return CreateHeroTemplate<Warrior>(GetRandomInt(50, 120), GetRandomInt(6, 10), GetRandomInt(2, 5), 0,
-		                           GetRandomInt(4, 7), GetRandomInt(0, 1),
-		                           GetRandomInt(8, 11), GetRandomInt(0, 2));*/
-
-		return CreateHeroTemplate<Warrior>();
-		
-	case Archetype::Mage:
-		return CreateHeroTemplate<Barbarian>();
-	case Archetype::Barbarian:
-		/*return CreateHeroTemplate<Barbarian>(GetRandomInt(80, 200), GetRandomInt(3, 5), GetRandomInt(2, 3), 0,
-		                             GetRandomInt(2, 4), GetRandomInt(0, 1),
-		                             GetRandomInt(4, 9), GetRandomInt(0, 2));*/
-
-		return CreateHeroTemplate<Barbarian>();
-		
-	case Archetype::Warlock:
-		return CreateHeroTemplate<Barbarian>();
+	case Archetype::Archetype_Warrior:
+		return CreateHeroTemplate<Warrior>(GetRandomStats(Archetype_Warrior));
+	case Archetype::Archetype_Mage:
+		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Mage));
+	case Archetype::Archetype_Barbarian:
+		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+	case Archetype::Archetype_Warlock:
+		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+	default: 
+		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
 	}
-	return CreateHeroTemplate<Barbarian>();
+
 }
 
 int32_t HeroFactory::GetRandomInt(const int32_t min, const int32_t max)
@@ -47,13 +43,13 @@ std::string HeroFactory::HeroClassToString(const Archetype Class)
 {
 	switch (Class)
 	{
-	case Archetype::Warrior:
+	case Archetype::Archetype_Warrior:
 		return "Warrior";
-	case Archetype::Mage:
+	case Archetype::Archetype_Mage:
 		return "Mage";
-	case Archetype::Barbarian:
+	case Archetype::Archetype_Barbarian:
 		return "Barbarian";
-	case Archetype::Warlock:
+	case Archetype::Archetype_Warlock:
 		return "Warlock";
 
 	default:
@@ -65,12 +61,33 @@ std::vector<std::unique_ptr<Hero>> HeroFactory::CreateInitialRoster()
 {
 	std::vector<std::unique_ptr<Hero>> Roster;
 	Roster.reserve(4);
-	auto NewHero = CreateHero(Archetype::Warrior);
-	auto NewHero2 = CreateHero(Archetype::Barbarian);
+	auto NewHero = CreateHero(Archetype::Archetype_Warrior);
+	auto NewHero2 = CreateHero(Archetype::Archetype_Barbarian);
 	//TODO Just testing creting Base Hero
 	Roster.push_back(std::move(NewHero));
 	Roster.push_back(std::move(NewHero2));
 	
 
 	return Roster;
+}
+
+AttributeSet HeroFactory::GetRandomStats(Archetype HeroClass)
+{
+	if (HeroClass > StatsDB.size())
+	{
+		return {};
+	}
+
+	return {
+
+		.Health = GetRandomInt(StatsDB[HeroClass].Health.first, StatsDB[HeroClass].Health.second),
+		.Str = GetRandomInt(StatsDB[HeroClass].Strength.first, StatsDB[HeroClass].Strength.second),
+		.Int = GetRandomInt(StatsDB[HeroClass].Intelligence.first, StatsDB[HeroClass].Intelligence.second),
+		.Resource = GetRandomInt(StatsDB[HeroClass].Resource.first, StatsDB[HeroClass].Resource.second),
+		.armor = GetRandomInt(StatsDB[HeroClass].Armor.first, StatsDB[HeroClass].Armor.second),
+		.MgArmor = GetRandomInt(StatsDB[HeroClass].MagicArmor.first, StatsDB[HeroClass].MagicArmor.second),
+		.AttackPower = GetRandomInt(StatsDB[HeroClass].AttackPower.first, StatsDB[HeroClass].AttackPower.second),
+		.MagicPower = GetRandomInt(StatsDB[HeroClass].MagicPower.first, StatsDB[HeroClass].MagicPower.second)
+	};
+	
 }

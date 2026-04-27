@@ -16,6 +16,8 @@ public:
 	Health(InHealth), Strength(InStrength), Intelligence(InIntelligence), Resource(InResource), Armor(InArmor), MagicArmor(InMagicArmor), AttackPwr(InAttackPwr), MagicPwr(InMagicPwr)
 	{
 	}
+	
+	Hero(const AttributeSet& Set );
 
 	Hero(const Hero& Other) = default;
 	Hero& operator=(const Hero& Other) = default;

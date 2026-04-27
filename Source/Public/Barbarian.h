@@ -5,6 +5,10 @@ class Barbarian :public MeleeHero
 {
 
 public:
+	
+	Barbarian() : MeleeHero(){}
+	Barbarian(const AttributeSet& Set) : MeleeHero(Set){}
+	
 	virtual Archetype GetHeroArchetype() const override
 	{
 		return CurrentType;
@@ -12,6 +16,6 @@ public:
 
 private:
 
-	Archetype CurrentType = Archetype::Barbarian;
+	Archetype CurrentType = Archetype::Archetype_Barbarian;
 };
 

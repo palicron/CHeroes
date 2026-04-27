@@ -1,14 +1,15 @@
 #pragma once
 
-
+#include <utility>
 class Hero;
 
-enum class Archetype
+enum Archetype : uint8_t
 {
-	Warrior,
-	Mage,
-	Barbarian,
-	Warlock
+	Archetype_Warrior = 0,
+	Archetype_Mage = 1,
+	Archetype_Barbarian = 2,
+	Archetype_Warlock = 3,
+	Archetype_Max
 };
 
 enum class DamageType
@@ -44,5 +45,29 @@ struct DamageInfo
 	{
 		return (DamageAttributes & Attr) != 0;
 	}
+};
+
+struct HeroArchetypeData
+{
+	std::pair<int32_t, int32_t> Health;
+	std::pair<int32_t, int32_t> Strength ;
+	std::pair<int32_t, int32_t> Intelligence;
+	std::pair<int32_t, int32_t> Resource;
+	std::pair<int32_t, int32_t> Armor;
+	std::pair<int32_t, int32_t> MagicArmor;
+	std::pair<int32_t, int32_t> AttackPower;
+	std::pair<int32_t, int32_t> MagicPower;
+};
+struct AttributeSet
+{
+	int32_t Health = 0;
+	int32_t Str = 0;
+	int32_t Int = 0;
+	int32_t Resource = 0;
+	int32_t armor = 0;
+	int32_t MgArmor = 0;
+	int32_t AttackPower = 0;
+	int32_t MagicPower = 0;
+	
 };
 
