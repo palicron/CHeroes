@@ -3,6 +3,8 @@
 #include <random>
 #include "Barbarian.h"
 #include "Hero.h"
+#include "Mage.h"
+#include "Warlock.h"
 #include "Warrior.h"
 
 const std::array<HeroArchetypeData, Archetype::Archetype_Max> HeroFactory::StatsDB = {{
@@ -19,11 +21,11 @@ std::unique_ptr<Hero> HeroFactory::CreateHero(Archetype HeroArchetype)
 	case Archetype::Archetype_Warrior:
 		return CreateHeroTemplate<Warrior>(GetRandomStats(Archetype_Warrior));
 	case Archetype::Archetype_Mage:
-		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Mage));
+		return CreateHeroTemplate<Mage>(GetRandomStats(Archetype_Mage));
 	case Archetype::Archetype_Barbarian:
 		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
 	case Archetype::Archetype_Warlock:
-		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+		return CreateHeroTemplate<Warlock>(GetRandomStats(Archetype_Warlock));
 	default: 
 		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
 	}
@@ -51,7 +53,6 @@ std::string HeroFactory::HeroClassToString(const Archetype Class)
 		return "Barbarian";
 	case Archetype::Archetype_Warlock:
 		return "Warlock";
-
 	default:
 		return "None";
 	}
@@ -61,13 +62,12 @@ std::vector<std::unique_ptr<Hero>> HeroFactory::CreateInitialRoster()
 {
 	std::vector<std::unique_ptr<Hero>> Roster;
 	Roster.reserve(4);
-	auto NewHero = CreateHero(Archetype::Archetype_Warrior);
-	auto NewHero2 = CreateHero(Archetype::Archetype_Barbarian);
-	//TODO Just testing creting Base Hero
-	Roster.push_back(std::move(NewHero));
-	Roster.push_back(std::move(NewHero2));
-	
 
+	//TODO Just testing creting Base Hero
+	Roster.push_back(std::move(CreateHero(Archetype::Archetype_Warrior)));
+	Roster.push_back(std::move(CreateHero(Archetype::Archetype_Barbarian)));
+	Roster.push_back(std::move(CreateHero(Archetype::Archetype_Mage)));
+	Roster.push_back(std::move(CreateHero(Archetype::Archetype_Warlock)));
 	return Roster;
 }
 
