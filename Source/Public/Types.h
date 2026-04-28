@@ -29,6 +29,15 @@ enum EDamageAttribute : uint8_t
 	Poison = 1 << 4
 };
 
+enum class EWeaponClass : uint8_t
+{
+	None ,
+	Sword,
+	Axe,
+	Staff,
+	Wand
+};
+
 struct DamageInfo
 {
 	int32_t Amount = 0;
