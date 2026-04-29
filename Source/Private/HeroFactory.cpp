@@ -14,22 +14,38 @@ const std::array<HeroArchetypeData, Archetype::Archetype_Max> HeroFactory::Stats
 	{ {35, 120}, {3, 9}, {9, 18}, {100, 150},{2, 5},{2, 5},{2, 5},{2, 5}}, // Warlock
 	
 }};
+
+const std::array<WeaponDamage,EWeaponClass::EWeaponClass_Max> HeroFactory::WeaponDB = {{
+	{"unarmed",1,10}, //Unarm
+	{"Sword",3,15}, //Sword 
+	{"Axe",8,12}, //Axe
+	{"Staff",4,10}, //Staff
+	{"Wand",1,5}, //Wand
+}};
+
 std::unique_ptr<Hero> HeroFactory::CreateHero(Archetype HeroArchetype)
 {
+	std::unique_ptr<Hero> Hero = nullptr;
 	switch (HeroArchetype)
 	{
 	case Archetype::Archetype_Warrior:
-		return CreateHeroTemplate<Warrior>(GetRandomStats(Archetype_Warrior));
+		Hero = CreateHeroTemplate<Warrior>(GetRandomStats(Archetype_Warrior));
+		break;
 	case Archetype::Archetype_Mage:
-		return CreateHeroTemplate<Mage>(GetRandomStats(Archetype_Mage));
+		Hero = CreateHeroTemplate<Mage>(GetRandomStats(Archetype_Mage));
+		break;
 	case Archetype::Archetype_Barbarian:
-		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+		Hero = CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+		break;
 	case Archetype::Archetype_Warlock:
-		return CreateHeroTemplate<Warlock>(GetRandomStats(Archetype_Warlock));
-	default: 
-		return CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
+		Hero = CreateHeroTemplate<Warlock>(GetRandomStats(Archetype_Warlock));
+		break;
+	default:
+		Hero = CreateHeroTemplate<Barbarian>(GetRandomStats(Archetype_Barbarian));
 	}
+	Hero->EquipAWeapon();
 
+	return Hero;
 }
 
 int32_t HeroFactory::GetRandomInt(const int32_t min, const int32_t max)
@@ -78,7 +94,7 @@ AttributeSet HeroFactory::GetRandomStats(Archetype HeroClass)
 		return {};
 	}
 
-	return {
+	AttributeSet NewAttribute = {
 
 		.Health = GetRandomInt(StatsDB[HeroClass].Health.first, StatsDB[HeroClass].Health.second),
 		.Str = GetRandomInt(StatsDB[HeroClass].Strength.first, StatsDB[HeroClass].Strength.second),
@@ -89,5 +105,37 @@ AttributeSet HeroFactory::GetRandomStats(Archetype HeroClass)
 		.AttackPower = GetRandomInt(StatsDB[HeroClass].AttackPower.first, StatsDB[HeroClass].AttackPower.second),
 		.MagicPower = GetRandomInt(StatsDB[HeroClass].MagicPower.first, StatsDB[HeroClass].MagicPower.second)
 	};
+
+	switch (HeroClass) {
+	case Archetype_Warrior:
+		NewAttribute.weapon_class = EWeaponClass_Sword;
+		break;
+	case Archetype_Mage:
+		NewAttribute.weapon_class = EWeaponClass_Staff;
+		break;
+	case Archetype_Barbarian:
+		NewAttribute.weapon_class = EWeaponClass_Axe;
+		break;
+	case Archetype_Warlock:
+		NewAttribute.weapon_class = EWeaponClass_Wand;
+		break;
+	case Archetype_Max:
+		break;
+	}
+	
+	return NewAttribute;
 	
 }
+
+WeaponDamage HeroFactory::GetDamageByType(EWeaponClass WeaponClass)
+{
+	if (WeaponClass < 0 || WeaponClass > WeaponDB.size())
+	{
+		//If invalid Don equip a weapon
+		return WeaponDB[0];
+	}
+
+	return WeaponDB[WeaponClass];
+}
+
+

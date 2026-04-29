@@ -182,6 +182,14 @@ void GameManager::PrintHeroBox(const Hero& Inhero)
     
 	// Fila de Recurso
 	std::cout << "│  RES : " << Inhero.GetResource() << "  " << GenerateProgressBar(Inhero.GetResource(), Inhero.GetMaxResource(), '=') << "  │" << "\n";
+	std::cout << "────────────────────────────────────────────" << "\n";
+	
+	if (Inhero.GetEquippedWeapon())
+	{
+		std::cout << "────────────────────────────────────────────" << "\n";
+		std::cout << Inhero.GetEquippedWeapon()->ToString() << "\n";
+		std::cout << "────────────────────────────────────────────" << "\n";
+	}
     
 	std::cout << "└──────────────────────────────────────────┘" << "\n";
 }

@@ -26,11 +26,13 @@ public:
 	static std::string HeroClassToString(const Archetype Class);
 	
 	static AttributeSet GetRandomStats(Archetype HeroClass) ;
+	
+	static WeaponDamage GetDamageByType(EWeaponClass WeaponClass);
 
 private:
 	
 	static const std::array<HeroArchetypeData,Archetype::Archetype_Max> StatsDB;
-	
+	static const std::array<WeaponDamage,EWeaponClass::EWeaponClass_Max> WeaponDB;
 };
 
 template <typename T, typename... TArgs>

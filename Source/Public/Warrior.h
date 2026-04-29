@@ -16,6 +16,7 @@ public:
 		return CurrentType;
 	}
 
+
 private:
 
 	Archetype CurrentType = Archetype::Archetype_Warrior;

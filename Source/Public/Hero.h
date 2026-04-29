@@ -1,30 +1,37 @@
 #pragma once
 #include <cstdint>
-
 #include "Types.h"
+#include "Weapon.h"
 
 struct DamageInfo;
 
 class Hero
 {
 public:
-	Hero() : Health(1), MaxHealth(1), Strength(1), Intelligence(1), Resource(1), MaxResource(1), Armor(0), MagicArmor(0),AttackPwr(1), MagicPwr(1)
+	Hero() : Health(1), MaxHealth(1), Strength(1), Intelligence(1), Resource(1), MaxResource(1), Armor(0), MagicArmor(0),AttackPwr(1), MagicPwr(1),EquipWeapon(nullptr)
 	{
 	}
 
 	Hero(int32_t InHealth, int32_t InStrength, int32_t InIntelligence, int32_t InResource, int32_t InArmor, int32_t InMagicArmor, int32_t InAttackPwr, int32_t InMagicPwr) :
 	Health(InHealth), MaxHealth(InHealth), Strength(InStrength), Intelligence(InIntelligence), Resource(InResource), MaxResource(InResource), Armor(InArmor), MagicArmor(InMagicArmor),
-	AttackPwr(InAttackPwr), MagicPwr(InMagicPwr)
+	AttackPwr(InAttackPwr), MagicPwr(InMagicPwr),EquipWeapon(nullptr)
 	{
 	}
 	
 	Hero(const AttributeSet& Set );
 
-	Hero(const Hero& Other) = default;
-	Hero& operator=(const Hero& Other) = default;
+	Hero(const Hero& Other) = delete;
+	Hero& operator=(const Hero& Other) = delete;
 	Hero(Hero&& Other) noexcept = default;
-	Hero& operator=(Hero&& Other) noexcept = default;
-	virtual ~Hero() = default;
+	Hero& operator=(Hero&& Other) noexcept
+	{
+		Other.EquipWeapon = this->EquipWeapon;
+		EquipWeapon = nullptr;
+	};
+	virtual ~Hero()
+	{
+		delete EquipWeapon;
+	};
 
 	virtual void MeleeAttack(Hero& Target);
 
@@ -84,7 +91,13 @@ public:
 	{
 		return MagicPwr;
 	}
+	
+	void EquipAWeapon();
 
+	Weapon* GetEquippedWeapon() const
+	{
+		return EquipWeapon;
+	}
 
 protected:
 
@@ -107,6 +120,10 @@ protected:
 	int32_t AttackPwr;
 
 	int32_t MagicPwr;
+	
+	Weapon* EquipWeapon;
+	
+	EWeaponClass WeaponClass;
 
 	virtual void OnDeath();
 };

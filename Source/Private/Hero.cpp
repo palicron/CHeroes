@@ -2,6 +2,8 @@
 #include "Types.h"
 #include <algorithm>
 
+#include "HeroFactory.h"
+
 Hero::Hero(const AttributeSet& Set)
 {
 	Health = Set.Health;
@@ -14,6 +16,7 @@ Hero::Hero(const AttributeSet& Set)
 	MagicArmor = Set.MgArmor;
 	AttackPwr = Set.AttackPower;
 	MagicPwr = Set.MagicPower;
+	WeaponClass = Set.weapon_class;
 }
 
 void Hero::MeleeAttack(Hero& Target)
@@ -65,6 +68,13 @@ void Hero::TakeDamage(const DamageInfo& DamageInfo)
 		OnDeath();
 	}
 
+}
+
+void Hero::EquipAWeapon()
+{
+	WeaponDamage Damage = HeroFactory::GetDamageByType(WeaponClass);
+	EquipWeapon = new Weapon(std::move(Damage.WeaponName),Damage.MinDamage,Damage.MaxDamage,0,WeaponClass,std::vector<EDamageAttribute>());
+	
 }
 
 void Hero::OnDeath()

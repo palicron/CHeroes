@@ -7,9 +7,12 @@
 class Weapon
 {
 public:
-    Weapon() = default;
+    Weapon(): Min_Damage(0),Max_Damage(0), MagicDamage(0),WeaponClass(EWeaponClass_None)
+    {
+        
+    }
 
-    Weapon(std::string&& InName, int32_t InDamage, int32_t InMagicDamage, EWeaponClass InClass, std::vector<EDamageAttribute>&& InDamageAttributes) : Name(std::move(InName)), Damage(InDamage), MagicDamage(InMagicDamage),
+    Weapon(std::string&& InName, int32_t InMinDamage, int32_t InMaxDamage,int32_t InMagicDamage, EWeaponClass InClass, std::vector<EDamageAttribute>&& InDamageAttributes) : Name(std::move(InName)), Min_Damage(InMinDamage),Max_Damage(InMaxDamage), MagicDamage(InMagicDamage),
                                                                                                                                                       WeaponClass(InClass), DamageAttributes(std::move(InDamageAttributes))
     {
     }
@@ -24,11 +27,15 @@ public:
     
     ~Weapon() = default;
     
+    virtual std::string ToString() const;
+    
 private:
     
     std::string Name;
     
-    int32_t Damage;
+    int32_t Min_Damage;
+    
+    int32_t Max_Damage;
     
     int32_t MagicDamage;
     

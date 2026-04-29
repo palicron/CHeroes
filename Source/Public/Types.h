@@ -1,6 +1,7 @@
 #pragma once
 
 #include <utility>
+#include <string>
 class Hero;
 
 enum Archetype : uint8_t
@@ -29,13 +30,14 @@ enum EDamageAttribute : uint8_t
 	Poison = 1 << 4
 };
 
-enum class EWeaponClass : uint8_t
+enum EWeaponClass : uint8_t
 {
-	None ,
-	Sword,
-	Axe,
-	Staff,
-	Wand
+	EWeaponClass_None = 0,
+	EWeaponClass_Sword = 1,
+	EWeaponClass_Axe = 2,
+	EWeaponClass_Staff = 3,
+	EWeaponClass_Wand = 4,
+	EWeaponClass_Max
 };
 
 struct DamageInfo
@@ -67,6 +69,14 @@ struct HeroArchetypeData
 	std::pair<int32_t, int32_t> AttackPower;
 	std::pair<int32_t, int32_t> MagicPower;
 };
+
+
+struct WeaponDamage
+{
+	std::string WeaponName;
+	int32_t MinDamage = 0;
+	int32_t MaxDamage = 2;
+};
 struct AttributeSet
 {
 	int32_t Health = 0;
@@ -77,6 +87,7 @@ struct AttributeSet
 	int32_t MgArmor = 0;
 	int32_t AttackPower = 0;
 	int32_t MagicPower = 0;
+	EWeaponClass weapon_class;
 	
 };
 
