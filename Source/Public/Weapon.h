@@ -29,6 +29,17 @@ public:
     
     virtual std::string ToString() const;
     
+    int32_t GetAttackDamage() const;
+    
+    std::vector<EDamageAttribute> GetDamageAttributes() const
+    {
+        return DamageAttributes;
+    }
+    
+    int32_t GetMagicDamage() const
+    {
+        return MagicDamage;
+    }
 private:
     
     std::string Name;

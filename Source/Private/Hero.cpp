@@ -22,10 +22,18 @@ Hero::Hero(const AttributeSet& Set)
 void Hero::MeleeAttack(Hero& Target)
 {
 	DamageInfo NewDamage;
-	//TODO NEED TO ADD A Grap Weapon
-	NewDamage.Amount = ((10 * Strength) / 100) + ((10 * AttackPwr) / 200) + 10;
+	
+	const int32_t WeaponDamage = EquipWeapon ? EquipWeapon->GetAttackDamage() : 1;
+	NewDamage.Amount = WeaponDamage * (1 + ((Strength / 100) + AttackPwr / 200));
 	NewDamage.Instigator = &Target;
-	NewDamage.AddAttribute(bludgeoning);
+	if (EquipWeapon)
+	{
+		for (const EDamageAttribute& Attribute : EquipWeapon->GetDamageAttributes())
+		{
+			NewDamage.AddAttribute(Attribute);
+		}
+	}
+	
 
 	Target.TakeDamage(NewDamage);
 }
@@ -61,7 +69,7 @@ void Hero::TakeDamage(const DamageInfo& DamageInfo)
 		DamageToTake *= -1;
 	}
 
-	Health -= DamageToTake;
+	Health = std::clamp(Health - DamageToTake, 0, MaxHealth);
 
 	if (Health <= 0)
 	{

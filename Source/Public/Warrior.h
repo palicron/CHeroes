@@ -7,7 +7,10 @@ class Warrior : public MeleeHero
 {
 public:
 
-	Warrior(const AttributeSet& Set) : MeleeHero(Set){}
+	Warrior(const AttributeSet& Set) : MeleeHero(Set)
+	{
+		Resource = 0;
+	}
 	
 	virtual void MeleeAttack(Hero& Target) override;
 

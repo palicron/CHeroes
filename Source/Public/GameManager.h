@@ -28,7 +28,8 @@ public:
 	bool GetIsGameRunning() const { return bIsRunning; }
 
 private:
-
+	
+	int32_t CurrentTurn = 0;
 	int32_t OpponentIndex = 0;
 	GameManager() = default;
 	bool bIsRunning = true;

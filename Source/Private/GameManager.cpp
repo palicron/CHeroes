@@ -76,6 +76,7 @@ void GameManager::BeginGame()
 	PrintHeroBox(*OpponentHero);
 	std::cout << "====================================\n";
 	
+	CurrentTurn = 0;
 }
 
 void GameManager::GameTick()
@@ -115,6 +116,7 @@ void GameManager::GameTick()
 		std::cin.ignore(10000, '\n');
 		EndGame();
 	}
+	CurrentTurn++;
 }
 void GameManager::SelectOpponent()
 {
