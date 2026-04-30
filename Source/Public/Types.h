@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <string>
+class Ability;
 class Hero;
 
 enum Archetype : uint8_t

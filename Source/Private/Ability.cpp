@@ -1,5 +1,5 @@
-﻿#include "Ability.h"
-#include "Hero.h"
+﻿#include "../Public/Ability.h"
+#include "../Public/Hero.h"
 
 bool Ability::CastAbility(Hero& Target, Hero& Caster, const int32_t CurrentTurn)
 {

@@ -1,8 +1,12 @@
 #pragma once
+#include <array>
 #include <cstdint>
+#include <memory>
+
 #include "Types.h"
 #include "Weapon.h"
 
+class Ability;
 struct DamageInfo;
 
 class Hero
@@ -38,6 +42,8 @@ public:
 	virtual void UseAbility(const int32_t SlotIndex, Hero& Target);
 
 	virtual void TakeDamage(const DamageInfo& DamageInfo);
+	
+	virtual void EndTurn() = 0;
 
 	virtual Archetype GetHeroArchetype() const = 0;
 
@@ -101,6 +107,10 @@ public:
 
 protected:
 
+	std::array<std::shared_ptr<Ability>,4> Abilities;
+	
+	Weapon* EquipWeapon;
+	
 	int32_t Health;
 
 	int32_t MaxHealth;
@@ -120,8 +130,6 @@ protected:
 	int32_t AttackPwr;
 
 	int32_t MagicPwr;
-	
-	Weapon* EquipWeapon;
 	
 	EWeaponClass WeaponClass;
 

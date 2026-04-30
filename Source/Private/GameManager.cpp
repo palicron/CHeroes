@@ -97,6 +97,8 @@ void GameManager::GameTick()
 		PrintHeroBox(*OpponentHero);
 		std::cout << "====================================\n";
 		std::cout << "Turn \n";
+		PlayerHero->EndTurn();
+		OpponentHero->EndTurn();
 		if (PlayerHero->GetHealth() <= 0)
 		{
 			std::cout << "====================================\n";
@@ -115,7 +117,9 @@ void GameManager::GameTick()
 		std::cin.clear();
 		std::cin.ignore(10000, '\n');
 		EndGame();
+		return;
 	}
+
 	CurrentTurn++;
 }
 void GameManager::SelectOpponent()

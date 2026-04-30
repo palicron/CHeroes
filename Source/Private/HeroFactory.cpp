@@ -1,6 +1,8 @@
 #include "HeroFactory.h"
 
 #include <random>
+
+#include "Ability.h"
 #include "Barbarian.h"
 #include "Hero.h"
 #include "Mage.h"
@@ -23,8 +25,39 @@ const std::array<WeaponDamage,EWeaponClass::EWeaponClass_Max> HeroFactory::Weapo
 	{"Wand",1,5}, //Wand
 }};
 
+const std::array<std::array<std::shared_ptr<Ability>, 4>, Archetype::Archetype_Max> HeroFactory::AbilitiesDB = {
+	{
+		{
+			std::make_shared<Ability>("Slash", 2, 10, 25, EDamageAttribute::Slashing, DamageType::Physical),
+			std::make_shared<Ability>("Bash", 4, 20, 15, EDamageAttribute::bludgeoning, DamageType::Physical),
+			std::make_shared<Ability>("Cleave", 3, 15, 30, EDamageAttribute::Slashing, DamageType::Physical),
+			std::make_shared<Ability>("Berserk", 6, 50, 0, EDamageAttribute::Slashing, DamageType::Physical)
+		},
+		{
+			std::make_shared<Ability>("Axe Chop", 3, 18, 25, EDamageAttribute::Slashing, DamageType::Physical),
+			std::make_shared<Ability>("Skull Bash", 5, 25, 15, EDamageAttribute::bludgeoning, DamageType::Physical),
+			std::make_shared<Ability>("Rage Strike", 8, 40, 10, EDamageAttribute::Slashing, DamageType::Physical),
+			std::make_shared<Ability>("Whirlwind", 10, 55, 5, EDamageAttribute::Slashing, DamageType::Physical)
+		},
+		{
+			std::make_shared<Ability>("Fireball", 15, 25, 40, EDamageAttribute::Fire, DamageType::Magic),
+			std::make_shared<Ability>("Ice Lance", 10, 18, 35, EDamageAttribute::Ice, DamageType::Magic),
+			std::make_shared<Ability>("Arcane Burst", 20, 35, 25, EDamageAttribute::None, DamageType::Magic),
+			std::make_shared<Ability>("Healing Light", 18, 30, 0, EDamageAttribute::None, DamageType::Healing)
+		},
+		{
+			std::make_shared<Ability>("Shadow Bolt", 12, 22, 35, EDamageAttribute::Poison, DamageType::Magic),
+			std::make_shared<Ability>("Soul Drain", 18, 28, 25, EDamageAttribute::Poison, DamageType::Magic),
+			std::make_shared<Ability>("Dark Pact", 10, 20, 0, EDamageAttribute::None, DamageType::Healing),
+			std::make_shared<Ability>("Hellfire", 25, 45, 15, EDamageAttribute::Fire, DamageType::Magic)
+		}
+	}
+
+};
+
 std::unique_ptr<Hero> HeroFactory::CreateHero(Archetype HeroArchetype)
 {
+	
 	std::unique_ptr<Hero> Hero = nullptr;
 	switch (HeroArchetype)
 	{

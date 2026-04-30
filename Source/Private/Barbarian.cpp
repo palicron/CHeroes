@@ -5,5 +5,5 @@
 void Barbarian::TakeDamage(const DamageInfo& DamageInfo)
 {
     MeleeHero::TakeDamage(DamageInfo);
-    Resource = std::clamp(Resource + (DamageInfo.Amount / MaxResource * 15), 0, MaxResource);
+    Resource = std::clamp(Resource + 15, 0, MaxResource);
 }

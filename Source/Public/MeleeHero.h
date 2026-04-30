@@ -10,5 +10,7 @@ public:
 		Hero(InHealth, InStrength, InIntelligence, InResource, InArmor, InMagicArmor, InAttackPwr, InMagicPwr){}
 	
 	MeleeHero(const AttributeSet& Set) : Hero(Set){}
+	
+	virtual void EndTurn() override;
 };
 
