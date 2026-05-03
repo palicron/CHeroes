@@ -27,6 +27,7 @@ public:
 	
 	bool GetIsGameRunning() const { return bIsRunning; }
 
+	static int32_t GetCurrentTurn() { return GetInstace().CurrentTurn; }
 private:
 	
 	int32_t CurrentTurn = 0;
@@ -41,6 +42,8 @@ private:
 	
 	void DisplayHeroStats(const Hero& Inhero) const;
 	void PrintHeroBox(const Hero& Inhero);
+	void PrintAbilityBox(const Hero& Inhero);
+
 	void SelectOpponent();
 	
 	std::string GenerateProgressBar(int value, int max, char symbol);

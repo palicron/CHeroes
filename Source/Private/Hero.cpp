@@ -1,7 +1,9 @@
 #include "Hero.h"
 #include "Types.h"
 #include <algorithm>
+#include <iostream>
 
+#include "GameManager.h"
 #include "HeroFactory.h"
 
 Hero::Hero(const AttributeSet& Set)
@@ -40,35 +42,53 @@ void Hero::MeleeAttack(Hero& Target)
 
 void Hero::UseAbility(const int32_t SlotIndex, Hero& Target)
 {
-	//TODO TEMPORAL LOGIC TO COMPILE 
 	int32_t indx = SlotIndex;
-	if (indx> 0)
+	if (indx < 0 || indx >= Abilities.size())
 	{
-		Target.MeleeAttack(*this);
+		return;
+	}
+	
+	if (Abilities[SlotIndex])
+	{
+		if (Abilities[SlotIndex]->CastAbility(Target,*this,GameManager::GetCurrentTurn()))
+		{
+			Resource -= Abilities[SlotIndex]->GetCost();
+		}
 	}
 	
 }
 
 void Hero::TakeDamage(const DamageInfo& DamageInfo)
 {
-	//TODO for the moment 1 or armor is 1% reduction of damage
+	
 	int32_t DamageToTake = DamageInfo.Amount;
+
 
 	if (DamageInfo.Type == DamageType::Physical)
 	{
-		//TODO Need to manage attribute reductions
 		DamageToTake = std::max(DamageToTake - (1 - (Armor / 100)), 1);
+		
+		std::cout << "====================================\n";
+		std::cout << HeroFactory::HeroClassToString(GetHeroArchetype()) << " Takes Physical Damage = " << DamageToTake <<" \n";
+		std::cout << "====================================\n";
 	}
 	else if (DamageInfo.Type == DamageType::Magic)
 	{
+		std::cout << "====================================\n";
+		std::cout << HeroFactory::HeroClassToString(GetHeroArchetype()) << " Takes Magic Damage = " << DamageToTake <<" \n";
+		std::cout << "====================================\n";
 		DamageToTake = std::max(DamageToTake - (1 - (MagicArmor / 100)), 1);
 	}
 	else
 	{
 		//This will be a heal
 		DamageToTake *= -1;
+		std::cout << "====================================\n";
+		std::cout << HeroFactory::HeroClassToString(GetHeroArchetype()) << " Heals for  = " << DamageToTake <<" \n";
+		std::cout << "====================================\n";
 	}
 
+	
 	Health = std::clamp(Health - DamageToTake, 0, MaxHealth);
 
 	if (Health <= 0)
@@ -78,11 +98,26 @@ void Hero::TakeDamage(const DamageInfo& DamageInfo)
 
 }
 
+void Hero::SetAbility(std::array<std::shared_ptr<Ability>, 4>& InAbilities)
+{
+	Abilities = std::move(InAbilities);
+}
+
 void Hero::EquipAWeapon()
 {
 	WeaponDamage Damage = HeroFactory::GetDamageByType(WeaponClass);
 	EquipWeapon = new Weapon(std::move(Damage.WeaponName),Damage.MinDamage,Damage.MaxDamage,0,WeaponClass,std::vector<EDamageAttribute>());
 	
+}
+
+Ability* Hero::GetAbility(const int32_t SlotIndex) const
+{
+	if (SlotIndex < 0 || SlotIndex > 3)
+	{
+		return nullptr;
+	}
+	
+	return Abilities[SlotIndex].get();
 }
 
 void Hero::OnDeath()

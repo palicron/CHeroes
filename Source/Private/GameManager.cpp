@@ -77,26 +77,38 @@ void GameManager::BeginGame()
 	std::cout << "====================================\n";
 	
 	CurrentTurn = 0;
+	std::cin.clear();
+	std::cin.ignore(10000, '\n');
 }
 
 void GameManager::GameTick()
 {
 
-	std::cout << "Input A number for actions\n";
-	uint32_t InNumber;
+	std::cout << "====================================\n";
+	PrintHeroBox(*PlayerHero);
+	std::cout << "====================================\n";
+	std::cout << "====================================\n";
+	PrintHeroBox(*OpponentHero);
+	std::cout << "====================================\n";
+	PrintAbilityBox(*PlayerHero);
+
+	int32_t InNumber;
 
 	if (std::cin >> InNumber)
 	{
-		std::system("cls");
-		PlayerHero->MeleeAttack(*OpponentHero);
+		//std::system("cls");
+		
+		if (InNumber == 0)
+		{
+			PlayerHero->MeleeAttack(*OpponentHero);
+		}
+		else
+		{
+			PlayerHero->UseAbility(InNumber - 1, *OpponentHero);
+		}
+		
 		OpponentHero->MeleeAttack(*PlayerHero);
-		std::cout << "====================================\n";
-		PrintHeroBox(*PlayerHero);
-		std::cout << "====================================\n";
-		std::cout << "====================================\n";
-		PrintHeroBox(*OpponentHero);
-		std::cout << "====================================\n";
-		std::cout << "Turn \n";
+
 		PlayerHero->EndTurn();
 		OpponentHero->EndTurn();
 		if (PlayerHero->GetHealth() <= 0)
@@ -198,6 +210,48 @@ void GameManager::PrintHeroBox(const Hero& Inhero)
 	}
     
 	std::cout << "└──────────────────────────────────────────┘" << "\n";
+}
+
+void GameManager::PrintAbilityBox(const Hero& Inhero)
+{
+	std::cout << "\n==========================================================\n";
+	std::cout << "                MENU DE ACCIONES - " << HeroFactory::HeroClassToString(Inhero.GetHeroArchetype()) << "\n";
+	std::cout << "==========================================================\n";
+
+	
+	std::cout << " [0] Melee Attack      | Cost: 0   | CD: Ready [V]\n";
+	
+
+	for (int32_t i = 0; i < 4; ++i) {
+		
+		const Ability* ab = Inhero.GetAbility(i);
+		
+		if (!ab)
+		{
+			continue;
+		}
+	
+		// Lógica de Cooldown: (TurnoActual - UltimoTurnoUsado)
+		int turnsPassed = CurrentTurn - ab->GetLastCastTurn();
+		int turnsRemaining = ab->GetCooldown() - turnsPassed;
+		bool isReady = turnsPassed >= ab->GetCooldown() || ab->GetLastCastTurn() <= 0;
+
+		// Formateo de nombre para que siempre ocupe el mismo espacio
+		std::string nameField = ab->GetName();
+		if (nameField.length() < 18) nameField.append(18 - nameField.length(), ' ');
+
+		std::cout << " [" << i + 1 << "] " << nameField 
+				  << "| Cost: " << std::setw(3) << ab->GetCost() << " | ";
+
+		if (isReady) {
+			std::cout << "CD: Ready [V]";
+		} else {
+			std::cout << "CD: Wait  [" << turnsRemaining << "T]";
+		}
+		std::cout << "\n";
+	}
+	std::cout << "==========================================================\n";
+	std::cout << " Selecciona una accion (0-4): ";
 }
 
 

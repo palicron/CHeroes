@@ -7,7 +7,7 @@ class Ability
 {
 public:
     Ability(std::string inName , int32_t inDamage,int32_t inCooldown,int32_t inCost, EDamageAttribute inDamageAttribute,DamageType inType) : Name(inName), Cooldown(inCooldown), Cost(inCost),
-        Damage(inDamage), LastCastTurn(0), Type(inType), DamageAttribute(inDamageAttribute)
+        Damage(inDamage), LastCastTurn(-1), Type(inType), DamageAttribute(inDamageAttribute)
     {
     }
 
@@ -20,6 +20,7 @@ public:
     int32_t GetCost() const { return Cost; }
     std::string GetName() const { return Name; }
     int32_t GetDamage() const { return Damage; }
+    int32_t GetLastCastTurn() const { return LastCastTurn; }
     EDamageAttribute GetDamageAttribute() const { return DamageAttribute; }
     
 
@@ -30,7 +31,7 @@ private:
     int32_t Cooldown;
     int32_t Cost;
     int32_t Damage;
-    int32_t LastCastTurn;
+    int32_t LastCastTurn = -1;
     DamageType Type;
     EDamageAttribute DamageAttribute;
 };

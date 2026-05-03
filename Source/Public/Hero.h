@@ -46,7 +46,9 @@ public:
 	virtual void EndTurn() = 0;
 
 	virtual Archetype GetHeroArchetype() const = 0;
-
+	
+	virtual void SetAbility(std::array<std::shared_ptr<Ability>,4>& Abilities);
+	
 	int32_t GetHealth() const
 	{
 		return Health;
@@ -104,9 +106,11 @@ public:
 	{
 		return EquipWeapon;
 	}
+	
+	Ability* GetAbility(const int32_t SlotIndex) const;
 
 protected:
-
+	
 	std::array<std::shared_ptr<Ability>,4> Abilities;
 	
 	Weapon* EquipWeapon;
@@ -132,7 +136,7 @@ protected:
 	int32_t MagicPwr;
 	
 	EWeaponClass WeaponClass;
-
+	
 	virtual void OnDeath();
 };
 

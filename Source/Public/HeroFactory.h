@@ -30,14 +30,12 @@ public:
 	static AttributeSet GetRandomStats(Archetype HeroClass) ;
 	
 	static WeaponDamage GetDamageByType(EWeaponClass WeaponClass);
-	
-	
 
 private:
 
 	static const std::array<HeroArchetypeData,Archetype::Archetype_Max> StatsDB;
 	static const std::array<WeaponDamage,EWeaponClass::EWeaponClass_Max> WeaponDB;
-	static const std::array<std::array<std::shared_ptr<Ability>,4>,Archetype::Archetype_Max> AbilitiesDB;
+	static std::array<std::array<std::shared_ptr<Ability>,4>,Archetype::Archetype_Max> AbilitiesDB;
 };
 
 template <typename T, typename... TArgs>
